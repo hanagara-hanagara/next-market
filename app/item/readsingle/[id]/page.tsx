@@ -8,7 +8,7 @@ type Context = {
 };
 
 const getSingleItem = async (id: string) => {
-    const response = await fetch(`http://localhost:3000/api/item/readsingle//${id}`, { cache: 'no-store' });
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/item/readsingle//${id}`, { cache: 'no-store' });
     const jsonData = await response.json();
     const singleItem: ItemData = jsonData.singleItem;
     return singleItem;

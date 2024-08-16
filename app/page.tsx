@@ -15,7 +15,7 @@ type AllItems = {
 };
 
 const getAllItems = async () => {
-    const response = await fetch('http://localhost:3000/api/item/readall', { cache: 'no-store' });
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/item/readall`, { cache: 'no-store' });
     const jsonData: AllItems = await response.json();
     const allItems = jsonData.allItems;
     return allItems;
@@ -23,7 +23,6 @@ const getAllItems = async () => {
 
 const ReadAllItems = async () => {
     const allItems = await getAllItems();
-    console.log(allItems);
 
     return (
         <div className="grid-container-in">

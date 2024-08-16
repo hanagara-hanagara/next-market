@@ -26,7 +26,7 @@ const CreateItem = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3000/api/item/create', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/item/create`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
