@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import useAuth from '@/app/utils/useAuth';
 import { ItemData } from '@/app/api/item/create/route';
 import { Context } from '@/app/api/item/readsingle/[id]/route';
@@ -14,6 +15,7 @@ const DeleteItem = (context: Context) => {
     });
     const [email, setEmail] = useState('');
     const loginUserEmail = useAuth();
+    const router = useRouter();
 
     useEffect(() => {
         const getSingleItem = async (id: string) => {
@@ -56,6 +58,8 @@ const DeleteItem = (context: Context) => {
             const jsonData: { message: string } = await response.json();
             console.log(jsonData);
             alert(jsonData.message);
+            router.push('/');
+            router.refresh();
         } catch (err) {
             alert('アイテム削除失敗');
         }

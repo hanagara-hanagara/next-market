@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import useAuth from '@/app/utils/useAuth';
 
 const CreateItem = () => {
@@ -11,6 +12,7 @@ const CreateItem = () => {
     });
 
     const loginUserEmail = useAuth();
+    const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         // console.log(e.target);
@@ -42,6 +44,8 @@ const CreateItem = () => {
             const jsonData: { message: string } = await response.json();
             console.log(jsonData);
             alert(jsonData.message);
+            router.push('/');
+            router.refresh();
         } catch (err) {
             alert('アイテム作成失敗');
         }
