@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { SignJWT } from 'jose';
-import connectDB from '../../utils/database';
-import { UserModel } from '../../utils/schemaModels';
+import connectDB from '../../../utils/database';
+import { UserModel } from '../../../utils/schemaModels';
 
 export interface UserData {
     name: string;
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
     try {
         await connectDB();
-        const savedUserData = await UserModel.findOneAndDelete({ email: reqBody.email });
+        const savedUserData = await UserModel.findOne({ email: reqBody.email });
 
         if (!savedUserData) return NextResponse.json({ message: 'ログイン失敗：ユーザ登録してください。' });
 
@@ -25,8 +25,8 @@ export async function POST(request: Request) {
                 email: reqBody.email,
             };
             const token = await new SignJWT(payload).setProtectedHeader({ alg: 'HS256' }).setExpirationTime('1d').sign(secretKey);
-            console.log(token);
 
+            console.log('ログイン成功');
             return NextResponse.json({ message: 'ログイン成功', token: token });
         } else {
             return NextResponse.json({ message: 'ログイン失敗：パスワードが間違っています。' });

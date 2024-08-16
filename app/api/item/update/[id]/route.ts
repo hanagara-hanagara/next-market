@@ -1,6 +1,6 @@
-import connectDB from '@/app/api/utils/database';
+import connectDB from '@/app/utils/database';
 import { NextResponse } from 'next/server';
-import { ItemModel } from '@/app/api/utils/schemaModels';
+import { ItemModel } from '@/app/utils/schemaModels';
 import type { Context } from '../../readsingle/[id]/route';
 
 export async function PUT(request: Request, context: Context) {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import connectDB from '../../../utils/database';
-import { ItemModel } from '../../../../api/utils/schemaModels';
+import connectDB from '../../../../utils/database';
+import { ItemModel } from '../../../../utils/schemaModels';
 
 export type Context = { params: { id: string } };
 

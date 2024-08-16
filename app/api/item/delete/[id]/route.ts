@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import connectDB from '../../../../api/utils/database';
-import { ItemModel } from '../../../../api/utils/schemaModels';
+import connectDB from '../../../../utils/database';
+import { ItemModel } from '../../../../utils/schemaModels';
 import type { Context } from '../../readsingle/[id]/route';
 
 export async function DELETE(request: Request, context: Context) {
