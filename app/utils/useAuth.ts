@@ -22,7 +22,7 @@ const useAuth = () => {
 
             try {
                 const secretKey = new TextEncoder().encode('next-market-app-book');
-                const decodedJwt: DecodedJwt = await jwtVerify(token ?? '', secretKey);
+                const decodedJwt: DecodedJwt = await jwtVerify(token!, secretKey);
                 setLoginUserEmail(decodedJwt.payload.email);
             } catch (err) {
                 router.push('/user/login');

@@ -1,3 +1,4 @@
+import type { NextPage } from 'next';
 import React from 'react';
 import { ItemData } from '@/app/api/item/create/route';
 import Image from 'next/image';
@@ -14,7 +15,7 @@ const getSingleItem = async (id: string) => {
     return singleItem;
 };
 
-const ReadSingleItem = async (context: Context) => {
+const ReadSingleItem: NextPage<Context> = async context => {
     const singleItem = await getSingleItem(context.params.id);
 
     return (

@@ -1,7 +1,8 @@
 'use client';
+import type { NextPage } from 'next';
 import { useState } from 'react';
 
-const Login = () => {
+const Login: NextPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 

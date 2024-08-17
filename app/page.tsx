@@ -1,3 +1,4 @@
+import type { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -21,7 +22,7 @@ const getAllItems = async () => {
     return allItems;
 };
 
-const ReadAllItems = async () => {
+const ReadAllItems: NextPage = async () => {
     const allItems = await getAllItems();
 
     return (

@@ -2,27 +2,17 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useAuth from '@/app/utils/useAuth';
+import type { NextPage } from 'next';
+import ImgInput from '../../components/imginput';
 
-const CreateItem = () => {
-    const [item, setItem] = useState({
-        title: '',
-        price: '',
-        image: '',
-        description: '',
-    });
+const CreateItem: NextPage = () => {
+    const [title, setTitle] = useState('');
+    const [price, setPrice] = useState('');
+    const [image, setImage] = useState('');
+    const [description, setDescription] = useState('');
 
     const loginUserEmail = useAuth();
     const router = useRouter();
-
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        // console.log(e.target);
-        const { name, value } = e.target;
-        console.log('name =', name, 'value =', value);
-        setItem({
-            ...item,
-            [name]: value,
-        });
-    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -36,7 +26,10 @@ const CreateItem = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
                 body: JSON.stringify({
-                    ...item,
+                    title: title,
+                    price: price,
+                    image: image,
+                    description: description,
                     email: loginUserEmail,
                 }),
             });
@@ -55,34 +48,35 @@ const CreateItem = () => {
         return (
             <div>
                 <h1 className="page-title">アイテム作成</h1>
+                <ImgInput setImage={setImage} />
                 <form onSubmit={handleSubmit}>
                     <input
-                        value={item.title}
-                        onChange={e => handleChange(e)}
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
                         type="text"
                         name="title"
                         placeholder="アイテム名"
                         required
                     />
                     <input
-                        value={item.price}
-                        onChange={e => handleChange(e)}
+                        value={price}
+                        onChange={e => setPrice(e.target.value)}
                         type="text"
                         name="price"
                         placeholder="価格"
                         required
                     />
                     <input
-                        value={item.image}
-                        onChange={e => handleChange(e)}
+                        value={image}
+                        onChange={e => setImage(e.target.value)}
                         type="text"
                         name="image"
                         placeholder="画像"
                         required
                     />
                     <textarea
-                        value={item.description}
-                        onChange={e => handleChange(e)}
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
                         name="description"
                         rows={15}
                         placeholder="商品説明"

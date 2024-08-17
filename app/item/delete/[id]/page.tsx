@@ -1,4 +1,5 @@
 'use client';
+import type { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useAuth from '@/app/utils/useAuth';
@@ -6,7 +7,7 @@ import { ItemData } from '@/app/api/item/create/route';
 import { Context } from '@/app/api/item/readsingle/[id]/route';
 import Image from 'next/image';
 
-const DeleteItem = (context: Context) => {
+const DeleteItem: NextPage<Context> = context => {
     const [item, setItem] = useState({
         title: '',
         price: '',
@@ -14,6 +15,8 @@ const DeleteItem = (context: Context) => {
         description: '',
     });
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const loginUserEmail = useAuth();
     const router = useRouter();
 
@@ -26,6 +29,7 @@ const DeleteItem = (context: Context) => {
                 ...singleItem,
             });
             setEmail(singleItem.email);
+            setLoading(true);
         };
         getSingleItem(context.params.id);
     }, [context]);
@@ -65,26 +69,30 @@ const DeleteItem = (context: Context) => {
         }
     };
 
-    if (loginUserEmail === email) {
-        return (
-            <div>
-                <h1 className="page-title">アイテム削除</h1>
-                <form onSubmit={handleSubmit}>
-                    <h2>{item.title}</h2>
-                    <Image
-                        src={item.price}
-                        width={750}
-                        height={500}
-                        alt={item.title}
-                        priority
-                    />
-                    <p>{item.description}</p>
-                    <button>削除</button>
-                </form>
-            </div>
-        );
+    if (loading) {
+        if (loginUserEmail === email) {
+            return (
+                <div>
+                    <h1 className="page-title">アイテム削除</h1>
+                    <form onSubmit={handleSubmit}>
+                        <h2>{item.title}</h2>
+                        <Image
+                            src={item.image}
+                            width={750}
+                            height={500}
+                            alt={item.title}
+                            priority
+                        />
+                        <p>{item.description}</p>
+                        <button>削除</button>
+                    </form>
+                </div>
+            );
+        } else {
+            <h1>権限がありません</h1>;
+        }
     } else {
-        <h1>権限がありません</h1>;
+        return <h1>ローディング中...</h1>;
     }
 };
 
